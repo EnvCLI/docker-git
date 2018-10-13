@@ -15,7 +15,7 @@ ENV VERSION "2.9.5"
 ############################################################
 
 RUN apt-get update &&\
-	apt-get install -y bash wget make autoconf libcurl4-gnutls-dev gettext gcc zlib1g-dev &&\
+	apt-get install -y --no-install-recommends bash wget ca-certificates make autoconf libcurl4-gnutls-dev gettext gcc zlib1g-dev &&\
 	wget https://www.kernel.org/pub/software/scm/git/git-${VERSION}.tar.gz &&\
 	tar xf git-${VERSION}.tar.gz &&\
 	cd git-${VERSION} &&\
@@ -23,7 +23,8 @@ RUN apt-get update &&\
 	make all &&\
 	make install &&\
 	rm -rf git-${VERSION} &&\
-	apt-get remove -y wget make autoconf libcurl4-gnutls-dev gcc zlib1g-dev
+	apt-get remove -y wget ca-certificates make autoconf libcurl4-gnutls-dev gcc zlib1g-dev &&\
+	rm -rf /var/lib/apt/lists/*
 
 ############################################################
 # Execution
